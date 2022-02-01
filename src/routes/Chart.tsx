@@ -18,8 +18,10 @@ interface ChartProps {
 }
 
 function Chart({ coinId }: ChartProps) {
-  const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
-    fetchCoinHistory(coinId)
+  const { isLoading, data } = useQuery<IHistorical[]>(
+    ["ohlcv", coinId],
+    () => fetchCoinHistory(coinId),
+    { refetchInterval: 10000 }
   );
   console.log(data);
   return (
@@ -45,9 +47,21 @@ function Chart({ coinId }: ChartProps) {
             grid: { show: false },
             yaxis: { show: false },
             xaxis: {
+              type: "datetime",
               labels: { show: false },
               axisTicks: { show: false },
               axisBorder: { show: false },
+              categories: data?.map((price) => price.time_close),
+            },
+            fill: {
+              gradient: {
+                gradientToColors: ["#0be881"],
+                stops: [0, 100],
+              },
+            },
+            colors: ["#0fbcf9"],
+            tooltip: {
+              y: { formatter: (value) => `$ ${value.toFixed(3)}` },
             },
           }}
         ></ApexCharts>

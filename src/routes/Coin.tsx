@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
 import {
   Link,
@@ -11,6 +12,16 @@ import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import Chart from "./Chart";
 import Price from "./Price";
+
+const Home = styled.div`
+  padding: 10px 0px;
+  font-size: 14px;
+  font-weight: 400;
+  position: fixed;
+  color: whitesmoke;
+  top: 5px;
+  left: 20px;
+`;
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -169,6 +180,15 @@ function Coin() {
   );
   return (
     <Container>
+      <Helmet>
+        <title>
+          {state?.name
+            ? state.name
+            : tickersLoading
+            ? "Loading..."
+            : infoData.name}
+        </title>
+      </Helmet>
       <Header>
         <Title>
           {state?.name
@@ -178,6 +198,9 @@ function Coin() {
             : infoData?.name}
         </Title>
       </Header>
+      <Home>
+        <Link to="/">Go To Home</Link>
+      </Home>
       {infoLoading ? (
         <Loader>Loading...</Loader>
       ) : (
@@ -192,8 +215,8 @@ function Coin() {
               <span>{infoData?.symbol}</span>
             </OverViewItem>
             <OverViewItem>
-              <span>Open Source :</span>
-              <span>{infoData?.open_source ? "Yes" : "No"}</span>
+              <span>Price : </span>
+              <span>{tickersData?.quotes.USD.price.toFixed(2)}</span>
             </OverViewItem>
           </OverView>
           <Description>{infoData?.description}</Description>
