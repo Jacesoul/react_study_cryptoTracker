@@ -17,10 +17,10 @@ const Home = styled.div`
   padding: 10px 0px;
   font-size: 14px;
   font-weight: 400;
+  color: black;
   position: fixed;
-  color: whitesmoke;
   top: 5px;
-  left: 20px;
+  right: 5px;
 `;
 
 const Container = styled.div`
@@ -216,7 +216,7 @@ function Coin() {
             </OverViewItem>
             <OverViewItem>
               <span>Price : </span>
-              <span>{tickersData?.quotes.USD.price.toFixed(2)}</span>
+              <span>{tickersData?.quotes?.USD?.price?.toFixed(2)}</span>
             </OverViewItem>
           </OverView>
           <Description>{infoData?.description}</Description>
